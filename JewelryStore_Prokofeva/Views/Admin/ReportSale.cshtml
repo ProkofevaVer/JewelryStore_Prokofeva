@@ -1,0 +1,93 @@
+﻿@model List<PurchaseDto>
+@{
+    ViewData["Title"] = "ReportSale";
+    // var userId = (int)ViewData["User  Id"];
+    // var productNameFilter = Request.Query["productName"].FirstOrDefault();
+    // var sizeFilter = Request.Query["size"].FirstOrDefault();
+    // var categoryFilter = Request.Query["category"].FirstOrDefault();
+    // var materialFilter = Request.Query["material"].FirstOrDefault();
+    // var forWhoFilter = Request.Query["forWho"].FirstOrDefault();
+}
+<h2>Администратор</h2>
+<h2>Администратор</h2>
+<h2>Администратор</h2>
+<h2>Администратор</h2>
+<h2>Администратор</h2>
+
+<h2>Администратор</h2>
+
+
+@* <h2>Фильтрация покупок</h2>
+<form method="get" action="@Url.Action("ReportSale", "Admin", new { id = userId })">
+    <div>
+        <label>User Id:</label>
+        <input type="number" name="userId" value="@Request.Query["userId"]" />
+    </div>
+    <div>
+        <label>Название товара:</label>
+        <input type="text" name="productName" value="@productNameFilter" />
+    </div>
+    <div>
+        <label>Размер:</label>
+        <input type="text" name="size" value="@sizeFilter" />
+    </div>
+    <div>
+        <label>Категория:</label>
+        <input type="text" name="category" value="@categoryFilter" />
+    </div>
+    <div>
+        <label>Материал:</label>
+        <input type="text" name="material" value="@materialFilter" />
+    </div>
+    <div>
+        <label>Для кого:</label>
+        <input type="text" name="forWho" value="@forWhoFilter" />
+    </div>
+    <button type="submit">Фильтровать</button>
+</form> *@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>User Id</th>
+            <th>Кол-во</th>
+            <th>Цена</th>
+            <th>Дата заказа</th>
+            <th>Название</th>
+            <th>Артикул</th>
+            <th>Размер</th>
+            <th>Категория</th>
+            <th>Материал</th>
+            <th>Для кого</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var purchase in Model)
+            {
+                <tr>
+                    <td>@purchase.Id</td>
+                    <td>@purchase.UserId</td>
+                    <td>@purchase.Quantity</td>
+                    <td>@purchase.TotalPrice</td>
+                    <td>@purchase.PurchaseDate.ToString("yyyy-MM-dd")</td>
+                    <td>@purchase.JewelrySize.JewelryItem.Title</td>
+                    <td>@purchase.JewelrySize.JewelryItem?.Articul</td>
+                    <td>@purchase.JewelrySize.Size</td>
+                    <td>@purchase.JewelrySize.JewelryItem.Category?.Name</td>
+                    <td>@purchase.JewelrySize.JewelryItem.Material?.Name</td>
+                    <td>@purchase.JewelrySize.JewelryItem.ForWho?.Name</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="11">Нет данных для отображения.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,103 @@
+﻿@model AddJewelryItemDto
+
+<div>
+   <h1>Добавление товара</h1>
+    <h1>Добавление товара</h1>
+    <h1>Добавление товара</h1>
+    <h1>Добавление товара</h1>
+    <h1>Добавление товара</h1>
+    <h1>Добавление товара</h1>
+    <h1>Добавление товара</h1><h1>Добавление товара</h1>
+    <h1>Добавление товара</h1>
+</div>
+
+<div>
+    <h1>Добавление товара</h1>
+    <form id="add-jewelry-item-form" method="post" asp-controller="Admin" asp-action="AddToJewelryItem">
+        <input type="hidden" name="adminId" value="@ViewData["AdminId"]" />
+
+        <label>Title:</label>
+        <input asp-for="Title" required />
+
+        <label>Price:</label>
+        <input asp-for="Price" type="number" required />
+
+        <label>Discount:</label>
+        <input asp-for="Discount" type="number" required />
+
+        <label>Articul:</label>
+        <input asp-for="Articul" required />
+
+        <label>Category:</label>
+        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "Id", "Name"))" required></select>
+
+        <label>Material:</label>
+        <select asp-for="MaterialId" asp-items="@(new SelectList(ViewBag.Materials, "Id", "Name"))" required></select>
+
+        <label>For Who:</label>
+        <select asp-for="ForWhoId" asp-items="@(new SelectList(ViewBag.ForWho, "Id", "Name"))" required></select>
+
+        <label>Stock Quantity:</label>
+        <input asp-for="StockQuantity" type="number" required />
+
+        <label>Approximate Weight:</label>
+        <input asp-for="ApproximateWeight" type="number" required />
+
+        <button type ="submit"  id="addjewelryitem_">Add Jewelry Item</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('add-jewelry-item-form').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение формы
+
+            const formData = new FormData(this);
+            const response = await fetch('/Admin/AddToJewelryItem', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const result = await response.json(); // Получаем JSON-ответ от сервера
+                document.getElementById('responseMessage').innerHTML = result.message; // Отображаем сообщение об успехе
+            } else {
+                const error = await response.json(); // Получаем JSON-ответ об ошибке
+                document.getElementById('responseMessage').innerHTML = error.message; // Отображаем сообщение об ошибке
+            }
+        });
+</script>
+
+@* <script>
+    document.getElementById('addjewelryitem_').addEventListener('click', async function() {
+        const form = document.getElementById('add-jewelry-item-form');
+        const formData = new FormData(form);
+        const addJewelryItemDto = {};
+
+        // Convert FormData to JSON
+        formData.forEach((value, key) => {
+            addJewelryItemDto[key] = value;
+        });
+
+        try {
+            const response = await fetch('/api/Admin/addjewelryitem_', { // Ensure the endpoint matches
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(addJewelryItemDto)
+            });
+
+            if (!response.ok) {
+                throw new Error('Network error: ' + response.statusText);
+            }
+
+            const data = await response.json();
+            console.log('Success:', data);
+            alert('Товар добавлен успешно!');
+            // Optionally, redirect or clear the form here
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Произошла ошибка при добавлении товара. Попробуйте еще раз.');
+        }
+    });
+</script> *@

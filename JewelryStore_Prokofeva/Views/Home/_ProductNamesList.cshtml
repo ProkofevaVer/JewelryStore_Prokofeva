@@ -1,0 +1,75 @@
+﻿@model List<JewelryStore_Prokofeva.Models.Product>
+
+<style>
+    /* Стили для списка товаров */
+    .custom-product-list {
+        list-style-type: none;
+        padding: 0;
+        background-color: white;
+    }
+
+        .custom-product-list li {
+            margin-bottom: 10px;
+        }
+
+            .custom-product-list li a {
+                display: flex; /* Чтобы изображение и текст были в строку */
+                align-items: center;
+                text-decoration: none; /* Убираем подчеркивание */
+                padding: 5px 10px;
+                border-radius: 4px;
+                transition: background-color 0.3s ease;
+            }
+
+                .custom-product-list li a:hover {
+                    background-color: #e0e0e0; /* Серый фон при наведении */
+                }
+
+        .custom-product-list img {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+            flex-shrink: 0; /* Чтобы изображение не сжималось */
+            border-radius: 4px;
+        }
+
+    .product-title {
+        color: black; /* Устанавливаем цвет текста черным */
+    }
+</style>
+
+
+
+@{
+    var requestPath = Context.Request.Path.Value;
+    bool isClientPath = requestPath.Contains("/api/Client");
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    <ul class="custom-product-list">
+        @foreach (var product in Model)
+        {
+            <li>
+                @if (isClientPath) // Проверяем, есть ли ID пользователя
+                {
+                    <a href="@Url.Action("ClientproductDetelisPage", "Client", new { id = product.Id, userId = ViewData["User  Id"] })" title="@product.Title" style="text-decoration: none; color: inherit;">
+                        <img src="@product.PhotoUrl" alt="@product.Title" />
+                        <span class="product-title">@product.Title</span>
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Details", "ProductsMvc", new { id = product.Id })" title="@product.Title">               
+                    <img src="@product.PhotoUrl" alt="@product.Title" />
+                    <span class="product-title">@product.Title</span>
+                    </a>
+                }
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Товары не найдены.</p>
+}

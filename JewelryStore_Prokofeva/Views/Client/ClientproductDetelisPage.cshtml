@@ -1,0 +1,559 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2>Клиент</h2>
+<h2>Клиент</h2>
+
+@model JewelryStore_Prokofeva.Models.ProductDetailsViewModel
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Background Images — Practice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Metal+Mania" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+    <script src="https://use.fontawesome.com/0ca06f29a6.js"></script>
+    <title>Ювелирный магазин</title>
+    <link href='https://fonts.googleapis.com/css?family=Imperial Script' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <style>
+        .container-product {
+            width: 120%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0;
+            background-color: cadetblue;
+            margin-right: 20%;
+        }
+
+        .info-product-main {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 140%;
+            margin-bottom: 5px;
+            font-size: 14px;
+            background-color: bisque;
+            margin-left: -200px;
+            margin-top: 10%;
+        }
+
+        .product-foto, .product-title, .container-product-price {
+            flex: 1;
+            margin: 0;
+        }
+
+        .product-foto {
+            flex: 1.5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-title {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container-product-price {
+            width: 300px;
+            margin-top: 15px;
+            margin-left: 15px;
+        }
+
+        .product-characteristic-notfull {
+            padding: 5px;
+        }
+
+        .product-articul, .product-material, .product-approximate-weight, .product-insert, .product-info-pol {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 0;
+        }
+
+        .product-approximate-weight,
+        .product-insert {
+            margin-bottom: 1px;
+        }
+
+        .p-articul, .name-articul {
+            font-size: 28px;
+            font-weight: bold;
+            color: rgb(112, 112, 112);
+            margin-right: 5px;
+            margin: 5px;
+            margin-bottom: 35px;
+        }
+
+        .p-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: black;
+            margin-bottom: 5px;
+            margin-right: 5px;
+            margin: 5px;
+        }
+
+        .p-material, .p-approximate-weight, .p-insert {
+            font-size: 20px;
+            font-weight: 300;
+            color: rgb(112, 112, 112);
+            margin-right: 5px;
+            margin: 5px;
+        }
+
+        .name-material, .name-proba, .p-proba,
+        .name-approximate-weight, .p-gramm,
+        .name-insert, .p-insert-count, .name-insert-karat, .p-insert-karat,
+        .p-insert-echo_count, .name-insert-echo_count {
+            font-size: 20px;
+            font-weight: 300;
+            color: black;
+            margin-right: 5px;
+            margin: 5px;
+        }
+
+        .product-foto img {
+            height: 500px;
+            object-fit: contain;
+        }
+
+        .product-info-pol, .product-all-characteristics {
+            padding: 5px;
+        }
+
+        .info-pol-title {
+            font-size: 20px;
+            margin: 5px;
+            color: rgb(112, 112, 112);
+        }
+
+        .info-all-characteristics {
+            font-size: 20px;
+            margin: 5px;
+            color: rgb(0, 102, 255);
+        }
+
+
+        .product-price-button {
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            background-color: white;
+            margin-top: 10%;
+            width: 320px;
+        }
+
+            .product-price-button .price {
+                font-size: 20px;
+                font-weight: bold;
+                color: black;
+                margin: 0;
+            }
+
+        .btn-v-corziny {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 20px;
+            padding: 10px;
+            margin-top: 10px;
+            color: #ffffff;
+            background-color: rgb(53, 117, 236);
+        }
+
+            .btn-v-corziny:hover {
+                background-color: rgb(41, 97, 199);
+            }
+
+        .p-size-product {
+            font-size: 24px;
+            font-weight: 550;
+            color: black;
+        }
+
+        .container-product-price {
+            width: 300px;
+            margin-top: 15px;
+            margin-left: 15px;
+        }
+
+        .info-all-characteristics a {
+            color: rgb(0, 102, 255);
+            text-decoration: none;
+        }
+
+            .info-all-characteristics a:hover {
+                text-decoration: underline;
+            }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .price, .discount, .final-price {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .rating {
+            direction: rtl;
+            display: inline-block;
+        }
+
+        .star {
+            font-size: 50px;
+            cursor: pointer;
+            color: lightgray;
+        }
+
+            .star:hover,
+            .star:hover ~ .star {
+                color: gold;
+            }
+
+            .star.selected {
+                color: gold;
+            }
+    </style>
+
+    <section class="container-fluid" id="container-product">
+
+        <div class="info-product-main">
+            <div class="product-foto">
+                @if (!string.IsNullOrEmpty(Model.Product.PhotoUrl))
+                {
+                    <img src="@Model.Product.PhotoUrl" alt="@Model.Product.Title" />
+                }
+            </div>
+            <div class="product-title">
+                <div class="rating">
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                </div>
+                <p id="rating-value">Выставленная оценка: @Model.Product.Rating?.ToString("F1")</p>
+                <p class="p-title">@Model.Product.Title</p>
+                <div class="product-articul">
+                    <p class="p-articul">Артикул:</p>
+                    <p class="name-articul">@Model.Product.Articul</p>
+                </div>
+                <div class="product-characteristic-notfull">
+                    <div class="product-material">
+                        <p class="p-material">Материал:</p>
+                        <p class="name-material">@Model.Product.Material?.Name</p>
+                    </div>
+                    <div class="product-approximate-weight">
+                        <p class="p-approximate-weight"> Примерный вес:</p>
+                        <p class="name-approximate-weight">@Model.Product.ApproximateWeight</p>
+                        <p class="p-gramm">г</p>
+                    </div>
+                    @if (Model.Product.InsertionsDetails != null && Model.Product.InsertionsDetails.Any())
+                    {
+                        foreach (var insertion in Model.Product.InsertionsDetails)
+                        {
+                            <div class="product-insert">
+                                <p class="p-insert">Вставка:</p>
+                                <p class="name-insert">@insertion.Insertion?.Name</p>
+                                <p class="p-insert-count">(@insertion.Quantity шт,</p>
+
+                                @* Check if there are any characteristics and display the weight of the first one *@
+                                @if (insertion.InsertionsCharacteristics != null && insertion.InsertionsCharacteristics.Any())
+                                {
+                                    <p class="name-insert-karat">@insertion.InsertionsCharacteristics[0]?.WeightCarat</p>
+                                }
+                                else
+                                {
+                                    <p class="name-insert-karat">Нет данных о карате</p>
+                                }
+
+                                <p class="p-insert-karat">карат)</p>
+                            </div>
+                        }
+                    }
+                </div>
+
+                <div class="product-info-pol">
+                    <p class="info-pol-title"> Реальные характеристики изделия могут иметь незначительные отличия от представленных на сайте.</p>
+                </div>
+                <div class="product-all-characteristics">
+                    <p class="info-all-characteristics">
+                        <a href="#product-characteristics">Все характеристики</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="container-product-price">
+                <div class="product-price-button">
+                    @if (Model.Product.Discount.HasValue && Model.Product.Discount > 0)
+                    {
+                        <div class="price-container">
+                            <p class="price" style="text-decoration: line-through;">@Model.Product.Price?.ToString("C")</p>
+                            <p class="discount" style="color: red; margin: 0 10px;">-@Model.Product.Discount%</p>
+                            <p class="final-price">@Model.Product.PriceDiscounr?.ToString("C")</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="price">@Model.Product.Price?.ToString("C")</p>
+                    }
+                    <button id="add-to-cart" class="btn-v-corziny" disabled>В корзину</button>
+                </div>
+                <p class="p-size-product">Размер, мм</p>
+                <div class="product-size-button">
+                    @if (Model.Sizes != null && Model.Sizes.Any())
+                    {
+                        foreach (var size in Model.Sizes)
+                        {
+                            <button class="size-button" data-id="@size.Id">@size.SizeName</button>
+                        }
+                    }
+                    else
+                    {
+                        <p>Размеры не указаны</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+        <div class="product-recommendations">
+            <div class="product-recommendations-item">
+                <div class="product-foto-recommendations">
+                    <img src="https://2pmdn.sokolov.io/images/8F/4E/A69CB073C74B471E3CF919AD28B8.jpg?width=500">
+                </div>
+                <p class="price-recommendations"> 29 990 ₽ </p>
+                <p class="title-recommendations"> Кольцо из белого золота с бриллиантами  </p>
+            </div>
+        </div>
+
+        <style>
+            .product-characteristics {
+                margin: 20px;
+            }
+
+            .card-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .card {
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                padding: 20px;
+                flex: 1 1 300px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                background-color: #fff;
+            }
+
+            .card-title {
+                font-weight: bold;
+                color: black;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+            .main-characteristics-product-articul, .product-insert {
+                margin-bottom: 10px;
+            }
+
+            .main-characteristics-p-articul, .insert-characteristics-insert {
+                margin: 0;
+                font-weight: bold;
+                text-align: center
+            }
+
+            .main-characteristics-name-articul, .insert-characteristics-p-insert {
+                margin: 0;
+                font-weight: normal;
+                text-align: center;
+            }
+
+            .product-insert {
+                margin-top: 10px;
+            }
+
+            .Insert-characteristics-product.card {
+                flex: 0 1 250px; /* Установите базовую ширину в 250px */
+                margin: 10px; /* Добавьте отступы между карточками */
+            }
+
+            .product-insert .insert-characteristics-p-insert {
+                margin: 10px 0;
+                text-align: center;
+                display: block;
+            }
+        </style>
+        <div class="product-characteristics" id="product-characteristics">
+            <p>Характеристики</p>
+
+            <div class="card-container">
+                <div class="Main-characteristics-product card">
+                    <h3 class="card-title">Основные характеристики</h3>
+                    <div class="main-characteristics-product-articul">
+                        <p class="main-characteristics-p-articul">Артикул:</p>
+                        <p class="main-characteristics-name-articul">@Model.Product.Articul</p>
+                    </div>
+                    <div class="main-characteristics-product-articul">
+                        <p class="main-characteristics-p-articul">Для кого:</p>
+                        <p class="main-characteristics-name-articul">@Model.Product.ForWho?.Name</p>
+                    </div>
+                    <div class="main-characteristics-product-articul">
+                        <p class="main-characteristics-p-articul">Примерный вес:</p>
+                        <p class="main-characteristics-name-articul">@Model.Product.ApproximateWeight?.ToString() г</p>
+                    </div>
+                    <div class="main-characteristics-product-articul">
+                        <p class="main-characteristics-p-articul">Материал:</p>
+                        <p class="main-characteristics-name-articul">@Model.Product.Material?.Name</p>
+                    </div>
+                    <div class="main-characteristics-product-articul">
+                        <p class="main-characteristics-p-articul">Категория:</p>
+                        <p class="main-characteristics-name-articul">@Model.Product.Category?.Name</p>
+                    </div>
+                </div>
+
+                @if (Model.Product.InsertionsDetails != null && Model.Product.InsertionsDetails.Any())
+                {
+                    foreach (var insertion in Model.Product.InsertionsDetails)
+                    {
+                        <div class="Insert-characteristics-product card">
+                            <h3 class="card-title">@insertion.Insertion?.Name, @insertion.Quantity шт</h3>
+                            <div class="product-insert">
+                                <p class="insert-characteristics-p-insert">Тип вставки: @insertion.Insertion?.Name</p>
+                                <p class="insert-characteristics-p-insert">Форма вставки: @insertion.InsertionsCharacteristics.FirstOrDefault()?.ShapeForm</p>
+                                <p class="insert-characteristics-p-insert">Количество: @insertion.Quantity шт</p>
+                                <p class="insert-characteristics-p-insert">Цвет: @insertion.InsertionsCharacteristics.FirstOrDefault()?.Color</p>
+                                <p class="insert-characteristics-p-insert">Вес: @insertion.InsertionsCharacteristics.FirstOrDefault()?.WeightCarat</p>
+                                <p class="insert-characteristics-p-insert">Чистота: @insertion.InsertionsCharacteristics.FirstOrDefault()?.Clarity</p>
+                                <p class="insert-characteristics-p-insert">Огранка: @insertion.InsertionsCharacteristics.FirstOrDefault()?.CutOgranka</p>
+                                <p class="insert-characteristics-p-insert">Цветность: @insertion.InsertionsCharacteristics.FirstOrDefault()?.ColorGrade</p>
+                                <p class="insert-characteristics-p-insert">Размеры вставки: @insertion.InsertionsCharacteristics.FirstOrDefault()?.Dimensions</p>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>Нет данных о вставках.</p>
+                }
+            </div>
+        </div>
+    </section>
+
+
+
+    <script>
+        let selectedSizeId = null;
+
+            const userId = @ViewData["User Id"]; // Получаем ID пользователя из ViewData
+        const productPriceDiscount = @Model.Product.PriceDiscounr; // Получаем цену со скидкой из модели
+
+        function selectSize(button) {
+            // Удаляем класс 'selected' у всех кнопок размера
+            const sizeButtons = document.querySelectorAll('.size-button');
+            sizeButtons.forEach(btn => btn.classList.remove('selected'));
+
+            // Добавляем класс 'selected' к нажатой кнопке
+            button.classList.add('selected');
+            selectedSizeId = button.getAttribute('data-id');
+
+            // Активируем кнопку "В корзину"
+            document.getElementById('add-to-cart').disabled = false;
+        }
+
+            // Добавляем обработчики событий для кнопок выбора размера
+        document.querySelectorAll('.size-button').forEach(button => {
+            button.addEventListener('click', function() {
+                selectSize(button);
+            });
+        });
+
+        document.getElementById('add-to-cart').addEventListener('click', async function() {
+            if (selectedSizeId) {
+                // Создаем объект CartItem
+                const cartItem = {
+                    JewelrySizesItemId: selectedSizeId,
+                    UserId: userId,
+                    CardQuantity: 1, // Можно изменить, если нужно
+                    CardTotalPrice: productPriceDiscount // Общая цена
+                };
+
+                try {
+                    const response = await fetch('/api/Client/add-to-cart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(cartItem)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Сетевая ошибка: ' + response.statusText);
+                    }
+
+                    const data = await response.json();
+                    console.log('Успех:', data);
+                    alert('Товар добавлен в корзину!');
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    alert('Произошла ошибка при добавлении товара в корзину. Попробуйте еще раз.');
+                }
+            } else {
+                alert('Пожалуйста, выберите размер перед добавлением в корзину.');
+            }
+        }); 
+    </script>
+
+    <style>
+        .size-button.selected {
+            background-color: #007bff; /* Highlight color */
+            color: white; /* Text color for selected size */
+        }
+    </style>
+
+
+
+    <script>
+            const stars = document.querySelectorAll('.star');
+        const ratingValue = document.getElementById('rating-value');
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const value = star.getAttribute('data-value');
+
+                // Удаляем класс selected у всех звезд
+                stars.forEach(s => s.classList.remove('selected'));
+
+                // Добавляем класс selected к выбранным звездам
+                for (let i = 0; i < value; i++) {
+                    stars[i].classList.add('selected');
+                }
+
+                // Обновляем значение оценки
+                ratingValue.textContent = `Выставленная оценка: ${value}`;
+            });
+        });
+    </script>
+
+</body>
+</html>

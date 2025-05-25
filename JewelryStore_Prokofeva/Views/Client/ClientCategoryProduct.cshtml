@@ -1,0 +1,257 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    var userId = ViewData["User Id"];
+}
+@model IEnumerable<Product>
+
+<style>
+    .product-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        order: 1;
+    }
+
+    .product-card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        width: 250px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+    .product-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    .product-title {
+        font-size: 18px;
+        margin: 10px 0;
+    }
+
+    .product-price {
+        font-size: 16px;
+        color: #333;
+    }
+
+    .pagination {
+        order: 2;
+        padding: 20px;
+    }
+
+</style>
+
+<h1>Каталог</h1>
+
+<div>
+    <h2>Фильтр по категориям</h2>
+    <form method="get" id="filterForm">
+        <div>
+            <h3>Категории</h3>
+            @foreach (var category in ViewBag.Categories)
+            {
+                var isChecked = ViewBag.SelectedCategoryIds != null && ViewBag.SelectedCategoryIds.Contains(category.Id);
+                <div>
+                    <input type="checkbox" name="selectedCategoryIds" value="@category.Id" id="category_@category.Id" onchange="this.form.submit();" @(isChecked ? "checked" : "") />
+                    <label for="category_@category.Id">@category.Name</label>
+                </div>
+            }
+        </div>
+
+        <div>
+            <h3>Материалы</h3>
+            @foreach (var material in ViewBag.Materials)
+            {
+                var isChecked = ViewBag.SelectedMaterialIds != null && ViewBag.SelectedMaterialIds.Contains(material.Id);
+                <div>
+                    <input type="checkbox" name="selectedMaterialIds" value="@material.Id" id="material_@material.Id" onchange="this.form.submit();" @(isChecked ? "checked" : "") />
+                    <label for="material_@material.Id">@material.Name</label>
+                </div>
+            }
+        </div>
+
+        <div>
+            <h3>Принадлежность</h3>
+            @foreach (var item in ViewBag.ForWhom)
+            {
+                var isChecked = ViewBag.SelectedForWhomIds != null && ViewBag.SelectedForWhomIds.Contains(item.Id);
+                <div>
+                    <input type="checkbox" name="selectedForWhomIds" value="@item.Id" id="forWhom_@item.Id" onchange="this.form.submit();" @(isChecked ? "checked" : "") />
+                    <label for="forWhom_@item.Id">@item.Name</label>
+                </div>
+            }
+        </div>
+
+        <div>
+            <h3>Вставки</h3>
+            @foreach (var insertion in ViewBag.Insertions)
+            {
+                var isChecked = ViewBag.SelectedInsertionIds != null && ViewBag.SelectedInsertionIds.Contains(insertion.Id);
+                <div>
+                    <input type="checkbox" name="selectedInsertionIds" value="@insertion.Id" id="insertion_@insertion.Id" onchange="this.form.submit();" @(isChecked ? "checked" : "") />
+                    <label for="insertion_@insertion.Id">@insertion.Name</label>
+                </div>
+            }
+        </div>
+        <div>
+            <h3>Ценовые диапазоны</h3>
+            <button type="button" id="showPriceInputs" onclick="togglePriceInputs()">Написать цену</button>
+            <div id="priceInputs" style="display:none;">
+                <div>
+                    <label for="customMinPrice">От:</label>
+                    <input type="number" id="customMinPrice" name="customMinPrice" value="@ViewBag.CustomMinPrice" onchange="this.form.submit();" />
+                </div>
+                <div>
+                    <label for="customMaxPrice">До:</label>
+                    <input type="number" id="customMaxPrice" name="customMaxPrice" value="@ViewBag.CustomMaxPrice" onchange="this.form.submit();" />
+                </div>
+            </div>
+            <div id="priceRangeSelection">
+                @foreach (var priceRange in ViewBag.PriceRanges)
+                {
+                    var isChecked = ViewBag.SelectedPriceRanges != null && ViewBag.SelectedPriceRanges.Contains(priceRange.Id);
+                    <div>
+                        <input type="checkbox" name="selectedPriceRanges" value="@priceRange.Id" id="priceRange_@priceRange.Id" onchange="this.form.submit();" @(isChecked ? "checked" : "") />
+                        <label for="priceRange_@priceRange.Id">@priceRange.Name</label>
+                    </div>
+                }
+            </div>
+
+    </form>
+</div>
+@{
+    var products = ViewBag.Products as IEnumerable<Product>;
+}
+
+<div class="product-container">
+    @if (products == null || !products.Any())
+    {
+        <p>Товары не найдены.</p>
+    }
+    else
+    {
+        foreach (var product in products)
+        {
+            <div class="product-card">
+                <a href="@Url.Action("ClientproductDetelisPage", "Client", new { id = product.Id, userId = ViewData["User Id"] })" style="text-decoration: none; color: inherit;">
+                    @if (!string.IsNullOrEmpty(product.PhotoUrl))
+                    {
+                        <img src="@product.PhotoUrl" alt="@product.Title" class="product-image" />
+                    }
+                    <div style="margin-top: 10px;">
+                        @if (product.Discount > 0 && product.Price.HasValue && product.PriceDiscounr.HasValue)
+                        {
+                            <div>
+                                <span style="text-decoration: line-through; font-size: 14px;">
+                                    @(product.Price.HasValue ? product.Price.Value.ToString("C") : "Цена не указана")
+                                </span>
+                                <span style="color: red; margin-left: 10px; font-size: 14px;">-@product.Discount%</span>
+                            </div>
+                            <div>
+                                <span style="font-size: 18px; font-weight: bold;">
+                                    @(product.PriceDiscounr.HasValue ? product.PriceDiscounr.Value.ToString("C") : "Цена не указана")
+                                </span>
+                            </div>
+                        }
+                        else if (product.Price.HasValue)
+                        {
+                            <span>@(product.Price.Value.ToString("C"))</span>
+                        }
+                        else
+                        {
+                            <span>Цена не указана</span>
+                        }
+                    </div>
+
+                    <h3 class="product-title">@product.Title</h3>
+                </a>
+            </div>
+        }
+    }
+</div>
+
+
+<div class="pagination">
+    @* Кнопка "Назад" *@
+    @if (ViewBag.CurrentPage > 1)
+    {
+        <button type="button" id="back" onclick="goToPreviousPage()">Назад</button>
+    }
+
+    @* Номера страниц *@
+    @for (int pageIndex = 1; pageIndex <= ViewBag.TotalPages; pageIndex++)
+    {
+        if (pageIndex == ViewBag.CurrentPage)
+        {
+            <strong>@pageIndex</strong> @* Текущая страница выделена *@
+        }
+        else
+        {
+            <button type="button" onclick="navigateToPage(@pageIndex)">@pageIndex</button>
+        }
+    }
+
+    @* Кнопка "Вперед" *@
+    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+    {
+        <button type="button" id="forward" onclick="goToNextPage()">Вперед</button>
+    }
+</div>
+
+
+@*  // Скрипт "Показать ещё ..." и Скрипт Назад *@
+<script>
+    function navigateToPage(page) {
+        var url = buildUrl(page);
+        window.location.href = url;
+    }
+
+    function goToNextPage() {
+        var nextPage = @ViewBag.CurrentPage + 1;
+        var url = buildUrl(nextPage);
+        window.location.href = url;
+    }
+
+    function goToPreviousPage() {
+        var previousPage = @ViewBag.CurrentPage - 1;
+        var url = buildUrl(previousPage);
+        window.location.href = url;
+    }
+
+    function buildUrl(page) {
+        var params = new URLSearchParams(window.location.search);
+        params.set('page', page); // Set the page number
+        return '?' + params.toString(); // Return the complete URL with parameters
+    }
+</script>
+
+
+@*  // Скрипт Для диапазона цен *@
+<script>
+    function togglePriceInputs() {
+        const priceInputs = document.getElementById('priceInputs');
+        const priceRangeSelection = document.getElementById('priceRangeSelection');
+
+        if (priceInputs.style.display === 'none') {
+            priceInputs.style.display = 'block';
+            priceRangeSelection.style.display = 'none'; // Скрыть диапазоны цен
+        } else {
+            priceInputs.style.display = 'none';
+            priceRangeSelection.style.display = 'block'; // Показать диапазоны цен
+            // Сбросить значения пользовательских цен
+            document.getElementById('customMinPrice').value = '';
+            document.getElementById('customMaxPrice').value = '';
+        }
+    }
+</script>
